@@ -1,6 +1,9 @@
 pipeline {
-	agent any 
-	//agent { docker { image '17-alpine3.12'} }
+	//agent any 
+	agent { docker {
+		 image '17-alpine3.12'
+		 reuseNode true
+	} }
 	environment {
 		dockerHome = tool "mydocker"
 		mavenHome = tool "myMaven"
@@ -11,6 +14,7 @@ pipeline {
 	stages {
 		stage('Build') {
 			steps{
+				sh 'node --version'
 				sh 'mvn --version'
 				sh 'docker --version'
 				echo "Build"
